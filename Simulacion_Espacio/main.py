@@ -66,6 +66,7 @@ class Planeta:
         self.radio = radio        # Distancia al Sol
         self.velocidad = velocidad # Qué tan rápido gira
         self.angulo = 0           # Ángulo inicial (0 grados)
+        self.luna = None
 
         # --- Creamos el cuerpo del planeta ---
         self.cuerpo = turtle.Turtle()
