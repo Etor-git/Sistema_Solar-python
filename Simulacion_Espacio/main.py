@@ -104,7 +104,64 @@ class Planeta:
         self.angulo += self.velocidad
 
 # ==========================================
-# 5. CREACIÓN DE LOS PLANETAS
+# 5. CLASE LUNA (Satélite que orbita un planeta)
+# ==========================================
+class Luna:
+    def __init__(
+        self,
+        nombre: str,
+        color: str,
+        planeta: Planeta,
+        radio: float,
+        velocidad: float,
+        tamaño: float,
+    ):
+        self.nombre = nombre
+        self.color = color
+        self.planeta = planeta
+        self.radio = radio
+        self.velocidad = velocidad
+        self.angulo = 0
+
+        self.orbita = turtle.Turtle()
+        self.orbita.hideturtle()
+        self.orbita.speed(0)
+        self.orbita.color("gray")
+        self.orbita.pensize(1)
+        self.orbita.penup()
+
+        self.cuerpo = turtle.Turtle()
+        self.cuerpo.shape("circle")
+        self.cuerpo.color(self.color)
+        self.cuerpo.shapesize(tamaño)
+        self.cuerpo.penup()
+
+        self.etiqueta = turtle.Turtle()
+        self.etiqueta.hideturtle()
+        self.etiqueta.color("white")
+        self.etiqueta.penup()
+
+    def mover(self) -> None:
+        """Mueve la Luna alrededor de la posición actual de su planeta."""
+        planeta_x, planeta_y = self.planeta.cuerpo.position()
+        self.orbita.clear()
+        self.orbita.goto(planeta_x, planeta_y - self.radio)
+        self.orbita.pendown()
+        self.orbita.circle(self.radio)
+        self.orbita.penup()
+
+        x = planeta_x + self.radio * math.cos(math.radians(self.angulo))
+        y = planeta_y + self.radio * math.sin(math.radians(self.angulo))
+
+        self.cuerpo.goto(x, y)
+        self.etiqueta.clear()
+        self.etiqueta.goto(x + 8, y + 8)
+        self.etiqueta.write(self.nombre, font=("Arial", 12, "bold"))
+
+        self.angulo += self.velocidad
+
+# ==========================================
+# 6. CREACIÓN DE LOS PLANETAS Y LA LUNA
 # ==========================================
 # Instanciamos (creamos) cada planeta con sus datos reales aproximados
 mercurio = Planeta("Mercurio", "gray", 80, 0.04, 0.5)
@@ -116,16 +173,20 @@ saturno = Planeta("Saturno", "pink", 380, 0.02, 1.4)
 urano = Planeta("Urano", "yellow", 420, 0.02, 1.4)
 neptuno = Planeta("Neptuno", "green", 460, 0.01, 1.4)
 
+luna = Luna("Luna", "lightgray", tierra, 28, 0.2, 0.35)
+
 # Guardamos todos los planetas en una lista para poder recorrerlos fácilmente
 planetas = [mercurio, venus, tierra, marte, jupiter, saturno, urano, neptuno]
 
 # ==========================================
-# 6. BUCLE PRINCIPAL DE ANIMACIÓN
+# 7. BUCLE PRINCIPAL DE ANIMACIÓN
 # ==========================================
 while True:
     # Recorremos la lista de planetas
     for planeta in planetas:
         planeta.mover()  # Cada planeta actualiza su posición
+
+    luna.mover()  # La Luna sigue la posición de la Tierra y orbita alrededor de ella
         
     # Actualizamos la pantalla para mostrar los cambios del fotograma actual
     pantalla.update()
