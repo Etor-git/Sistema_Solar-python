@@ -2,7 +2,7 @@
 
 Este proyecto muestra una representación animada y sencilla del sistema solar. Fue creado en Python con el módulo `turtle`: el Sol aparece en el centro, los ocho planetas recorren sus órbitas y la Luna gira alrededor de la Tierra.
 
-![Vista del sistema solar](./Sistema%20Solar%20-%20Entorno.png)
+![Vista de la simulación del sistema solar](./sistema-solar.png)
 
 ## El sistema solar
 
